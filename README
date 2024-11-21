@@ -1,0 +1,88 @@
+meta-dtappend (device-tree append)
+
+About
+=====
+To add a sensor to a Linux device requires two changes:
+	1. modify the kernel config to add a kernel config fragment to
+	   enable the device
+	2. modify the device-tree to configure the device (address, bus,
+	   parameters, etc)
+
+We have kernel config fragment support already, but a user is expected to
+provide a patch to adjust the device-tree. Kernel config fragments are
+very useful and handy. But after setting up many different combinations of
+devices with many different combinations of sensors it quickly becomes
+obvious that using a patch to adjust the device-tree is the wrong idiom.
+Patches are necessary for code, where changes need to be placed at specific
+locations in specific files. Any deviation usually means a mistake is being
+made. But trying to manage even a moderately-sized set of patches for a
+handful of machines quickly becomes an exercise in cat herding. Every
+sensor used on a different machine needs a tweak to the patch: both the
+file to patch needs to be adjusted, and the patch's pre- and post-context
+needs changing. But Yocto already knows which device-tree to adjust, and
+device-trees don't strictly need stanzas to be in specific locations, one
+can simply append to the bottom, and it works. dtc files are more like
+yaml, and less like code, so a tool for modifying code is the wrong tool
+for modifying device-trees.
+
+In the same way that kernel config fragments are the right idiom for Linux
+kernel config tweaks (which aren't patches), the right idiom for
+device-tree updates is an "appending" mechanism.
+
+This layer introduces a dtappend bbclass which defines a do_dtappend() task
+which is run after kernel patching, and before configuration. The task's
+job is to look through the kernel's SRC_URI to find *.dtappend lines and
+process them.
+
+For example, say you want to add the Adafruit BH1750 light sensor to your
+device. This device communicates over I2C and has an I2C address of 0x23.
+Let's say your SBC exposes a couple of I2C buses on its header, and you
+connected this device to the 4th I2C bus "i2c3".
+
+To enable kernel support you would need the following kernel config
+fragment:
+
+	CONFIG_BH1750=y
+
+and the following device-tree snippet:
+	&i2c3 {
+		status = "okay";
+
+		light-sensor@23 {
+			compatible = "rohm,bh1750";
+			reg = <0x23>;
+		};
+	};
+
+This layer provids both kernel config fragment and dtappend for this sensor:
+	- bh1750.cfg
+	- bh1750.dtappend
+
+To add this sensor to your build, include this layer and update your
+kernel's SRC_URI as follows:
+
+	SRC_URI:append = " \
+		file://bh1750.cfg \
+		file://bh1750.dtappend;I2C=i2c3 \
+		"
+
+As you can see, you can pass parameters in the URIs to tweak the snippet as
+necessary. Different dtappend files require different parameters, depending
+on what they are doing. This allows you, for example, to include multiple
+of the same device on different buses, if you so wish. See the contents of
+each dtappend file you are using for details.
+
+
+Dependencies
+============
+  URI: https://git.openembedded.org/openembedded-core
+  branch: matching branches
+
+
+Patches
+=======
+Please submit any patches against the meta-dtappend layer to the
+yocto-patches mailing list (yocto-patches@lists.yoctoproject.org) and cc:
+the maintainer:
+
+	Maintainer: Trevor Woerner <twoerner@gmail.com>

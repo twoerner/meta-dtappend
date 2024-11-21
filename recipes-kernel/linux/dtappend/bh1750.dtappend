@@ -1,0 +1,13 @@
+Enable the Rohm BH1750 (adafruit/4681) 16-bit ambient light sensor (0-65k lux).
+
+parms:
+  I2C = i2c device (e.g. i2c3)
+---
+&%I2C% {
+	status = "okay";
+
+	light-sensor@23 {
+		compatible = "rohm,bh1750";
+		reg = <0x23>;
+	};
+};

@@ -1,0 +1,13 @@
+Enable a 24c256 eeprom on i2c4, address 0x50.
+
+parm:
+  I2C = i2c device (e.g. i2c4)
+---
+&%I2C% {
+	status = "okay";
+
+	eeprom@50 {
+		compatible = "atmel,24c256";
+		reg = <0x50>;
+	};
+};

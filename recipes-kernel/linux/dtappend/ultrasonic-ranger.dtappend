@@ -1,0 +1,12 @@
+Enable ultrasonic range-finder.
+
+parms:
+  GPIO = gpiochip num (e.g. gpio3)
+  PIN  = gpio pin (e.g. PK_PA5)
+---
+/{
+	proximity {
+		compatible = "parallax,laserping";
+		ping-gpios = <&%GPIO% %PIN% GPIO_ACTIVE_HIGH>;
+	};
+};

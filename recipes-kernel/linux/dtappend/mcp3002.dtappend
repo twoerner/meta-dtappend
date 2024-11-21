@@ -1,0 +1,16 @@
+mcp3002: 10-Bit, 200kSPS, Dual Channel ADC
+https://www.microchip.com/en-us/product/mcp3002
+
+parms:
+  SPI = spi device (e.g. spi2)
+  VREF = voltage device (e.g. vcc5v0_sys)
+---
+&%SPI% {
+	status = "okay";
+
+	adc@0 {
+		compatible = "microchip,mcp3002";
+		reg = <0>;
+		vref-supply = <&%VREF%>;
+	};
+};

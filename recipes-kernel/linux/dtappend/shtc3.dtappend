@@ -1,0 +1,14 @@
+Enable the Sensirion SHTC3 (adafruit/4636) temperature and humidity sensor (±2% rH and ±0.2°C).
+
+parm:
+  I2C = i2c device (e.g. i2c3)
+---
+&%I2C% {
+	status = "okay";
+
+	shtc3@70 {
+		compatible = "sensirion,shtc3";
+		reg = <0x70>;
+		sensirion,blocking-io;
+	};
+};

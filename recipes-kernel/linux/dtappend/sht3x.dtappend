@@ -1,0 +1,13 @@
+Enable Sensirion sht3x temperature+humidity sensor (from adafruit/5064).
+
+parm:
+  I2C = i2c device (e.g. i2c3)
+---
+&%I2C% {
+	status = "okay";
+
+	humidity@44 {
+		compatible = "sensirion,sht3x";
+		reg = <0x44>;
+	};
+};

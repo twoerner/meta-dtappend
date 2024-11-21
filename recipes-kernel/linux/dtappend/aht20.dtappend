@@ -1,0 +1,13 @@
+Enable Aosong AHT20 temperature+humidity sensor (from adafruit/4566).
+
+parm:
+  I2C = i2c device (e.g. i2c3)
+---
+&%I2C% {
+	status = "okay";
+
+	humidity@38 {
+		compatible = "aosong,aht20";
+		reg = <0x38>;
+	};
+};

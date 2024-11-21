@@ -1,0 +1,12 @@
+Enable bit-banged, gpio-based, 1-wire.
+
+parms:
+  GPIO = gpiochip num (e.g. gpio3)
+  PIN  = gpio pin (e.g. RK_PC2)
+---
+/{
+	onewire {
+		compatible = "w1-gpio";
+		gpios = <&%GPIO% %PIN% (GPIO_ACTIVE_HIGH | GPIO_PULL_UP | GPIO_OPEN_DRAIN)>;
+	};
+};

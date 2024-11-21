@@ -1,0 +1,42 @@
+Enable mcp3002 ADC on spi-gpio.
+Pins: 35 (MOSI:GPIO3_A4)
+      37 (MISO:GPIO1_A4)
+      36 (CLK:GPIO3_A7)
+      38 (CS0:GPIO3_A6)
+
+NOTE: enabling spi3 disables ethernet on the radxa-zero-3e, therefore let's
+      bitbang SPI on some other pins instead
+---
+/{
+	gpio_spi: spi {
+		compatible = "spi-gpio";
+		pinctrl-names = "default";
+		pinctrl-0 = <&spi_pins>;
+		#address-cells = <0x1>;
+		#size-cells = <0x0>;
+
+		mosi-gpios = <&gpio3 RK_PA4 GPIO_ACTIVE_HIGH>;
+		miso-gpios = <&gpio1 RK_PA4 GPIO_ACTIVE_HIGH>;
+		sck-gpios = <&gpio3 RK_PA7 GPIO_ACTIVE_HIGH>;
+		cs-gpios = <&gpio3 RK_PA6 GPIO_ACTIVE_HIGH>;
+		num-chipselects = <1>;
+
+		adc@0 {
+			compatible = "microchip,mcp3002";
+			reg = <0>;
+			vref-supply = <&vcc_sys>;
+		};
+	};
+};
+ 
+&pinctrl {
+	gpio-spi {
+		spi_pins: spi-pins {
+			rockchip,pins =
+				<1 RK_PA4 RK_FUNC_GPIO &pcfg_pull_none>,
+				<3 RK_PA4 RK_FUNC_GPIO &pcfg_pull_none>,
+				<3 RK_PA6 RK_FUNC_GPIO &pcfg_pull_none>,
+				<3 RK_PA7 RK_FUNC_GPIO &pcfg_pull_none>;
+		};
+	};
+};
