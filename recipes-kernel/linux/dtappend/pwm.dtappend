@@ -1,0 +1,5 @@
+enable pwm
+---
+&%PWM% {
+	status = "okay";
+};
