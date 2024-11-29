@@ -1,0 +1,10 @@
+instantiate the _M1 alternate of a pwmN pin function
+
+parm:
+  PWM = the pwm pin to use (e.g. pwm13)
+---
+&%PWM% {
+	pinctrl-0 = <&%PWM%m1_pins>;
+	pinctrl-names = "default";
+	status = "okay";
+};
