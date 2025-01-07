@@ -1,0 +1,13 @@
+STMicroelectronics pressure sensor lps25h (from adafruit/4530).
+
+parm:
+  I2C = i2c device (e.g. i2c3)
+---
+&%I2C% {
+	status = "okay";
+
+	pressure@5d {
+		compatible = "st,lps25h-press";
+		reg = <0x5d>;
+	};
+};
