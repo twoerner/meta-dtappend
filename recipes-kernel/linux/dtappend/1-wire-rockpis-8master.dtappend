@@ -1,0 +1,45 @@
+multi-master 1-wire for rock-pi-s
+use the 8 gpios on the 2nd header of the rock-pi-s to setup
+8 individual 1-wire masters, one each
+---
+/{
+	w1_0: onewire@0 {
+		compatible = "w1-gpio";
+		gpios = <&gpio2 RK_PA6 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP | GPIO_OPEN_DRAIN)>;
+	};
+
+	w1_1: onewire@1 {
+		compatible = "w1-gpio";
+		gpios = <&gpio2 RK_PB0 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP | GPIO_OPEN_DRAIN)>;
+	};
+
+	w1_2: onewire@2 {
+		compatible = "w1-gpio";
+		gpios = <&gpio2 RK_PB3 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP | GPIO_OPEN_DRAIN)>;
+	};
+
+	w1_3: onewire@3 {
+		compatible = "w1-gpio";
+		gpios = <&gpio2 RK_PB4 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP | GPIO_OPEN_DRAIN)>;
+	};
+
+	w1_4: onewire@4 {
+		compatible = "w1-gpio";
+		gpios = <&gpio3 RK_PB2 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP | GPIO_OPEN_DRAIN)>;
+	};
+
+	w1_5: onewire@5 {
+		compatible = "w1-gpio";
+		gpios = <&gpio3 RK_PB3 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP | GPIO_OPEN_DRAIN)>;
+	};
+
+	w1_6: onewire@6 {
+		compatible = "w1-gpio";
+		gpios = <&gpio3 RK_PB4 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP | GPIO_OPEN_DRAIN)>;
+	};
+
+	w1_7: onewire@7 {
+		compatible = "w1-gpio";
+		gpios = <&gpio3 RK_PB5 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP | GPIO_OPEN_DRAIN)>;
+	};
+};
