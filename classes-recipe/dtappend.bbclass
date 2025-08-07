@@ -118,7 +118,7 @@ do_dtappend() {
 			bbnote "    parm ${parm_idx}: ${parm}"
 			search="$(echo ${parm} | cut -d'=' -f1)"
 			replace="$(echo ${parm} | cut -d'=' -f2)"
-			sed -ie "s/%${search}%/${replace}/g" ${dtsfile}
+			sed -i -e "s/%${search}%/${replace}/g" ${dtsfile}
 		done
 	done
 	IFS="${oldifs}"
