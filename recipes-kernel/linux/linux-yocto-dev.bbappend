@@ -1,2 +1,1 @@
-FILESEXTRAPATHS:prepend := "${THISDIR}/dtappend:"
-inherit dtappend
+require linux-dtappend.inc
